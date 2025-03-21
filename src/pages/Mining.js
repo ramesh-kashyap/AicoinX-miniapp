@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import {useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Api from '../Api/botService';
+import { Toaster, toast } from 'react-hot-toast';
 const Mining = () => {
   const [coins, setCoins] = useState([]); // Array for floating coins
   const [balance, setBalance] = useState(0); // User balance
@@ -52,7 +53,7 @@ const Mining = () => {
         setBalance(response.data.balance);
       }      
     } catch (err) {
-      console.error("Error updating balance:", err);
+      toast.error("Error updating balance:", err,{ duration: 1000 });
     }
   };
 
@@ -65,7 +66,7 @@ const Mining = () => {
       }
     }
     catch (err) {
-      console.error("Error updating balance:", err);
+      toast.error("Error updating balance:", err,{ duration: 1000 });
     }
    }
 
@@ -116,28 +117,29 @@ useEffect(() => {
           // setcoinBalance(response.data.coin);
           // settotalAllCoins(response.data.totalallCoin);
           if(!response.data.telegram_id){
-            setPopupMessage("❌ AiCoinX account is not connected");
-            setIsModalOpen(true);
+           toast.error("❌ AiCoinX account is not connected",{ duration: 1000 });
+            // setIsModalOpen(true);
           }
           else{
-            setPopupMessage("AiCoinX Connected");
-            setIsModalOpen(true);
+           toast.success("AiCoinX Connected",{ duration: 1000 });
+            // setIsModalOpen(true);
           }
          }
       }
       catch(error){
-           console.error("error in fatching", error);
+           toast.success("Somthing is wrong", error,{ duration: 1000 });
       }
     }
 
   return (
     <div
       className="bg-[#0d0d0d] text-gray-200 min-h-screen p-4 font-sans flex flex-col items-center relative">
+        <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full flex justify-between items-center text-white text-sm">
         <div className="flex gap-2 items-center bg-gray-800/50 px-4 py-3 rounded-lg">
           <img src="../assets/klink5.svg" alt="coin" className="w-5 h-5" />
           <span>{balance}</span>
-        </div>
+        </div>        
         <div className="flex gap-2 items-center bg-gray-800/50 px-4 py-3 rounded-lg" onClick={() => navigate("/tapairdrop")}>
         <img src="../assets/img/oksharp.png" alt="coin" className="w-5 h-5" onClick={() => navigate("/tapairdrop")}/>
           <span className="text-yellow-300">Bronze</span>

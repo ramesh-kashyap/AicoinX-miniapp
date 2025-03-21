@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import Api from '../Api/botService';
 import Loader from "../components/Loader"; 
 import SuccessPopup from "../components/SuccessPopup";
-import { CheckCircleIcon } from "@heroicons/react/solid"; // Install HeroIcons for icons
-
+import { CheckCircleIcon, ArrowCircleRightIcon } from "@heroicons/react/solid"; // Install HeroIcons for icons
+import { Toaster, toast } from 'react-hot-toast';
 
 const Home = () => {
   const [userData, setUserData] = useState(null);
@@ -32,7 +32,7 @@ const Home = () => {
       setShowModal(false);
 
       if (!window.Telegram || !window.Telegram.WebApp) {
-        console.error("❌ Telegram WebApp SDK is missing.");
+        toast.error("❌ Telegram WebApp SDK is missing.",{ duration: 1000 });
         setLoading(false); // Stop loading if the SDK is missing
         return;
       }
@@ -145,17 +145,17 @@ const [dots, setDots] = useState([]);
         // setcoinBalance(response.data.coin);
         // settotalAllCoins(response.data.totalallCoin);
         if(!response.data.telegram_id){
-          setPopupMessage("❌ AiCoinX account is not connected");
-          setIsModalOpen(true);
+          toast.error("❌ AiCoinX account is not connected",{ duration: 1000 });
+          // setIsModalOpen(true);
         }
         else{
-          setPopupMessage("AiCoinX Connected");
-          setIsModalOpen(true);
+          toast.success("AiCoinX Connected",{ duration: 1000 });
+          // setIsModalOpen(true);
         }
        }
     }
     catch(error){
-         console.error("error in fatching", error);
+      toast.error("error in fatching", error,{ duration: 1000 });
     }
   }
 
@@ -175,15 +175,15 @@ const [dots, setDots] = useState([]);
           );
         }, 5000);
       } catch (error) {
-        console.error("Error fetching user info:", error);
+        toast.error("Error fetching user info:", error,{ duration: 1000 });
         if (error.response) {
           const errorMessage = error.response.data.message || "An error occurred";
           // console.log(error.response.data.message);
-          setPopupMessage(errorMessage);
-          setIsModalOpen(true);
+          toast.error(errorMessage,{ duration: 1000 });
+          // setIsModalOpen(true);
         } else {
-          setPopupMessage("Something went wrong. Please try again.");
-          setIsModalOpen(true)
+          toast.error("Something went wrong. Please try again.",{ duration: 1000 });
+          // setIsModalOpen(true)
         }
       }
    
@@ -196,6 +196,7 @@ const [dots, setDots] = useState([]);
   return (
     <div className="bg-[#0d0d0d] text-gray-200 min-h-screen p-2 font-sans flex flex-col items-center relative" >
        {/* model popup/ */}
+       <Toaster position="top-right" reverseOrder={false} />
             {showModal && (
             <SuccessPopup/>
             )}    
@@ -207,7 +208,7 @@ const [dots, setDots] = useState([]);
       </div>
     </div>  
     <div className="w-full max-w-md space-y-4 mt-4">
-          <div className="bg-[#1C1A3A] p-2 rounded-xl flex items-center justify-between border border-gray-700">
+          <div className="bg-[#1C1A3A] p-2 rounded-xl flex items-center justify-between border border-gray-700"  onClick={() => fatchpoints()}>
             <div className="flex items-center gap-3">
               <img src="../assets/klink10.svg" alt="tone" className="w-11 h-12" />
               <div>
@@ -215,7 +216,8 @@ const [dots, setDots] = useState([]);
                    <p className="text-gray-400 text-sm">  <img src="assets/oksharp.png" style={{width:'14px',display:'inline'}} />2,500,00</p>
               </div>
             </div>
-          <span onClick={() => fatchpoints()}>&gt;</span>              
+          {/* <span onClick={() => fatchpoints()}>&gt;</span>  */}
+          <ArrowCircleRightIcon className="w-7 h-7 text-green-500"/>             
           </div>
       </div>  
     <div className="w-full max-w-md flex justify-between mt-6 border-b border-gray-700 pb-2 text-gray-400" style={{    width: "100%"}}>

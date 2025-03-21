@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import Api from "../Api/botService";
-
+import { Toaster, toast } from 'react-hot-toast';
 const Otp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);  
   const inputRefs = useRef([]);
@@ -35,17 +35,17 @@ const Otp = () => {
     e.preventDefault();
     const enteredOtp = otp.join(""); // Combine OTP digits
     if (enteredOtp.length !== 6) {
-      alert("Please enter a 6-digit OTP.");
+      toast.error("Please enter a 6-digit OTP.",{ duration: 1000 });
       return;
     }
     const userEmail = localStorage.getItem("userEmail");
     const telegram_id = localStorage.getItem("telegram_id");
     if (!userEmail){
-      alert("Email not found.Please try logging in again.");
+      toast.error("Email not found.Please try logging in again.",{ duration: 1000 });
       return;
     }
     if(!telegram_id){
-      alert("Telegram not found.Please try loggin in again.");
+      toast.error("Telegram not found.Please try loggin in again.",{ duration: 1000 });
       return;
     }
     try {
@@ -54,12 +54,12 @@ const Otp = () => {
         localStorage.removeItem("userEmail");
         sessionStorage.setItem("otpSuccess", "true"); // Set flag
         sessionStorage.setItem("popupMessage", "✅ OTP verified successfully!");
-        navigate('/mining');
+        navigate('/');
       } else {
-        alert("Invalid OTP. Please try again.");
+        toast.error("Invalid OTP. Please try again.",{ duration: 1000 });
       }
     } catch (error) {
-      console.error("Error verifying OTP:", error);
+      toast.error("Error verifying OTP:", error,{ duration: 1000 });
     }
   };
 
@@ -71,6 +71,7 @@ const Otp = () => {
         backgroundSize: "cover",
       }}
     >
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="text-center mt-8 px-4">
         <h1 className="text-2xl font-bold">Enter the 6-digit OTP</h1>
       </div>
@@ -80,7 +81,7 @@ const Otp = () => {
           <input
             key={index}
             ref={(el) => (inputRefs.current[index] = el)}
-            type="text"
+            type="number"
             maxLength="1"
             className="w-12 h-12 text-center text-xl font-bold bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={digit}

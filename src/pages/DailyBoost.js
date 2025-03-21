@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import Footer from '../components/Footer';
 import {useNavigate} from "react-router-dom";
 import Api from '../Api/botService';
-
+import { Toaster, toast } from 'react-hot-toast';
 
   
   const DailyBoost = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("dailyBoost");
+  const [activeTab, setActiveTab] = useState("mining");
   const [faqOpen, setFaqOpen] = useState(false);
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState();
   const [dailyRewards, setDailyRewards] = useState([]);
   const [claimedRewards, setClaimedRewards] = useState([]);
   const [lastClaimedDay, setLastClaimedDay] = useState(null);
@@ -18,6 +18,7 @@ import Api from '../Api/botService';
   const [eligibleRewardId, setEligibleRewardId] = useState(null);
   const [modalMessage, setModalMessage] = useState("");
   const [connect, setConnected] = useState(false);
+  
 //    useEffect =()=>{
 //    setIsModalOpen(true);
 // }
@@ -61,7 +62,7 @@ import Api from '../Api/botService';
           setConnected(false);
         }
     } catch (error) {
-        console.error("❌ Fetching rewards failed:", error);
+      toast.error("❌ Fetching rewards failed:", error,{ duration: 1000 });
     }
   };
   const Claimed = async () => {
@@ -100,15 +101,15 @@ import Api from '../Api/botService';
       }
     } catch (error) {
       console.log(response.data);
-      console.error(error, '❌ Failed to fetch claim data');
+      toast.error(error, '❌ Failed to fetch claim data',{ duration: 1000 });
     }
   };
   
   
   const handleClaim = async (reward) => {
     if (reward.id !== eligibleRewardId) {
-      setModalMessage("❌ You must wait 24 hours before claiming the next reward!");
-      setIsModalOpen(true);
+      toast.error("❌ You must wait 24 hours before claiming the next reward!",{ duration: 1000 });
+      // setIsModalOpen(true);
       return;
     }
   
@@ -116,18 +117,17 @@ import Api from '../Api/botService';
       const response = await Api.post('auth/claim-reward', { rewardId: reward.id });      
       if (response?.data?.success) {
         setClaimedRewards([...claimedRewards, reward.id]);
-        setIsModalOpen(true);
-        setModalMessage("🎉 Reward claimed successfully!");
+        // setIsModalOpen(true);
+        toast.success("🎉 Reward claimed successfully!",{ duration: 1000 });
         // alert("🎉 Reward claimed successfully!");
-        setIsModalOpen(true);
         Claimed(); // Refresh claim status
       } else {
         throw new Error(response.data.message || "Claim failed");
       }
     } catch (error) {
       // console.error("❌ Claiming reward failed:", error);
-      setModalMessage(error.response?.data?.message || "❌ An error occurred while claiming the reward.");
-      setIsModalOpen(true);
+      toast.error(error.response?.data?.message || "❌ An error occurred while claiming the reward.",{ duration: 1000 });
+      // setIsModalOpen(true);
     }
   };
   
@@ -145,6 +145,7 @@ import Api from '../Api/botService';
           backgroundSize: "cover",
         }}
       >
+        <Toaster position="top-right" reverseOrder={false} />
         <div className="w-full max-w-md flex justify-between bg-gray-900 rounded-full p-2 text-lg font-semibold">
           <button
             className={`w-1/2 text-center  rounded-full ${
@@ -173,8 +174,8 @@ import Api from '../Api/botService';
             {!connect && (
             <div className="w-full max-w-md bg-gray-800 rounded-lg p-3 flex justify-between items-center mt-6 border border-yellow-500 shadow-lg">
               <div className="flex items-center gap-2">
-                <img src="../assets/img/oksharp.png" alt="klink" className="w-9 h-10" />
-                <span className="text-gray-300">Connect your AiCoinX Account</span>
+                <img src="../assets/img/oksharp.png" alt="klink" className="w-6 h-6" />
+                <span className="text-lg">Connect your AiCoinX Account</span>
               </div>
               <button className="bg-yellow-500 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
             </div>
@@ -223,20 +224,20 @@ import Api from '../Api/botService';
             {!connect && (
             <div className="w-full max-w-md bg-gray-800 rounded-lg p-3 flex justify-between items-center mt-6 border border-yellow-500 shadow-lg">
               <div className="flex items-center gap-2">
-                <img src="../assets/img/oksharp.png" alt="klink" className="w-9 h-10" />
-                <span className="text-gray-300">Connect your AiCoinX Account</span>
+                <img src="../assets/img/oksharp.png" alt="klink" className="w-6 h-6" />
+                <span className="text-lg">Connect your AiCoinX Account</span>
               </div>
               <button className="bg-yellow-500 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
             </div>
              )}
 
-            <div className="w-full max-w-md bg-gray-900 rounded-lg p-3 mt-6 flex justify-between items-center border border-yellow-500">
+            {/* <div className="w-full max-w-md bg-gray-900 rounded-lg p-3 mt-6 flex justify-between items-center border border-yellow-500">
               <span className="bg-yellow-500 px-2 py-1 rounded text-black">X1.00</span>
               <span className="flex items-center gap-1">
                 <img src="../assets/img/oksharp.png" alt="klink" className="w-6 h-6" />
                 +3,600 points/hour
               </span>
-            </div>
+            </div> */}
 
             <div className="w-full max-w-md mt-8">
               <h2 className="text-xl font-bold">FAQ</h2>

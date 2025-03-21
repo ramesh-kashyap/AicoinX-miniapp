@@ -21,18 +21,18 @@ const Footer = () => {
           <p className="text-xs">Ref</p>
         </Link>
         <Link
-          to="/"
+          to="/mining"
           className={`flex flex-col items-center ${
-            isActive("/") ? "border border-gray-500 shadow-lg rounded-lg bg-[#7660FF30]" : ""
+            isActive("/mining") ? "border border-gray-500 shadow-lg rounded-lg bg-[#7660FF30]" : ""
           }`}
         >
           <img src="../assets/click23.svg" alt="Task" className="w-7 h-6" style={{height:30}}/>
           <p className="text-xs">Task</p>
         </Link>
         <Link
-          to="/mining"
+          to="/"
           className={`flex flex-col px-2 items-center ${
-            isActive("/mining") ? "border border-gray-500 shadow-lg rounded-lg bg-[#7660FF30]" : ""
+            isActive("/") ? "border border-gray-500 shadow-lg rounded-lg bg-[#7660FF30]" : ""
           }`}
         >
           <img src="../assets/klink24.svg" alt="Tap" className="w-7 h-6" style={{height:30}}/>

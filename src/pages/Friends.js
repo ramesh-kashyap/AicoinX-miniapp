@@ -1,19 +1,39 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Globe, ExternalLink, Zap, Users, Send, Clipboard } from "lucide-react";
 import Footer from '../components/Footer';
 import {useNavigate} from "react-router-dom";
-
+import Api from '../Api/botService';
 const Friends = () => {
   const navigate = useNavigate();
   const botUsername = "AiCoin07X_bot";
   const userId = localStorage.getItem('telegram_id');
+  const token = localStorage.getItem('token');
    const inviteLink = `https://t.me/${botUsername}?start=${userId}`;
-
+  const [fripoints, setFripoints] = useState(0);
   // Telegram share link
   const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(
     "🚀 Join this amazing bot and earn rewards!"
   )}`;
 
+     useEffect(()=>{
+      fatchfriends();
+     },[])
+
+     const fatchfriends  = async () =>{
+      try{
+         const response = await Api.post('auth/fetchfriend');
+         if(response.data){ 
+          console.log(response.data);
+          setFripoints(response.data.totalFriends||0);
+         }
+      }
+      catch(error){
+
+        console.log(error);
+        
+           console.error("Somthing Wrong try again!")
+      }
+     }
 
    const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -46,8 +66,8 @@ const Friends = () => {
             <img src="../assets/klink25.svg" alt="Invite Premium Friend" className="w-12 h-12" />
             <div className="flex justify-between items-center w-full max-w-md">
               <p className="text-white font-bold">Referred Points</p>
-              <img src="../assets/img/oksharp.png" alt="Invite Friend" className="text-white w-5 h-5"  style={{marginLeft:"12rem"}}/>
-              <p>0</p>
+              {/* <img src="../assets/img/oksharp.png" alt="Invite Friend" className="text-white w-5 h-5"  style={{marginLeft:"12rem"}}/> */}
+              <p className=" font-bold" style={{marginLeft:"13rem"}}>{fripoints}</p>
             </div>
           </div>
           {/* <ChevronRight className="text-gray-400 w-6 h-6" /> */}
@@ -60,7 +80,7 @@ const Friends = () => {
             <img src="../assets/click20.svg" alt="Invite Friend" className="w-12 h-12" />
             <div>
               <p className="text-white font-bold">Invite a friend</p>
-              <p className="text-gray-400 text-sm">+2,500 for you and your friend</p>
+              <p className="text-gray-400 text-sm">+50 for you and your friend</p>
             </div>
           </div>
           {/* <ChevronRight className="text-gray-400 w-6 h-6" /> */}

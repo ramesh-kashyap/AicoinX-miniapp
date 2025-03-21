@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Api = axios.create({
-  baseURL: 'https://api.aivault.world/api/', // Ensure backend is running
+  baseURL: 'https://3964-2405-201-5802-909b-653c-ee9d-3f76-4ea1.ngrok-free.app/api/', // Ensure backend is running
   headers: {
     'Content-Type': 'application/json',
   },

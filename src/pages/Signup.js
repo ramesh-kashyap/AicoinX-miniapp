@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Footer from '../components/Footer';
 import {useNavigate} from "react-router-dom";
 import Api from '../Api/botService';
+import { Toaster, toast } from 'react-hot-toast';
 const SignupPage = () => {
   const [activeTab, setActiveTab] = useState("signup");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +14,7 @@ const SignupPage = () => {
     e.preventDefault();
   
     if (!email.trim()) {
-      console.error("Email is required");
+      toast.error("Email is required",{ duration: 1000 });
       return;
     }
   
@@ -23,10 +24,10 @@ const SignupPage = () => {
         localStorage.setItem("userEmail", email);
         navigate("/otp-verification"); // Redirect to OTP page
       } else {
-        console.error("Failed to send OTP:", response.data.message);
+        toast.error("Failed to send OTP:", response.data.message,{ duration: 1000 });
       }
     } catch (error) {
-      console.error("Error sending OTP:", error.response ? error.response.data : error.message);
+      toast.error("Error sending OTP:", error.response ? error.response.data : error.message,{ duration: 1000 });
     }
   };
   
@@ -41,6 +42,7 @@ const SignupPage = () => {
         backgroundSize: "cover",
       }}
     >
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full max-w-md flex justify-between rounded-xl bg-gray-800 p-1 shadow-lg">
         <button
           className={`w-1/2 text-center py-2 rounded-xl font-bold text-lg transition-all ${

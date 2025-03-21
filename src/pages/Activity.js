@@ -75,7 +75,7 @@ const ActivityDashboard = () => {
       <div className="text-center mt-8">
         <p className="text-lg text-gray-300"style={{fontSize:15}}>$AiCoinX Airdrop Points</p>
         <h1 className="text-5xl font-bold flex items-center justify-center gap-2">
-          <img src="../assets/img/ok3d.png" alt="klink" className="w-9 h-10" />
+          <img src="../assets/img/ok3d.png" alt="klink" className="w-8 h-8" />
           {coinBalance}
         </h1>
       </div>
@@ -106,7 +106,7 @@ const ActivityDashboard = () => {
         <div className="text-center mt-8">
         <p className="text-lg text-gray-300"style={{fontSize:15}}>Community $KLINK Points</p>
         <h1 className="text-5xl font-bold flex items-center justify-center gap-2">
-          <img src="../assets/img/ok3d.png" alt="klink" className="w-9 h-10" />
+          <img src="../assets/img/ok3d.png" alt="klink" className="w-8 h-8" />
           {totalBalance}
         </h1>
       </div>

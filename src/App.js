@@ -84,7 +84,7 @@ const App = () => {
 
   // Fetch user info if the user is logged in
   const fetchUserInfo = async () => {
-    // console.log(username);
+    console.log(username);
     try {
       const response = await Api.post("auth/telegram-login", {
         telegram_id,
@@ -114,7 +114,7 @@ const App = () => {
     if (loading) {
       return <Loader />; // Show loader while loading
     }
-    return token ? element : <Navigate to="/" />;
+    return token ? element : <Navigate to="/mining" />;
   };
 
   return (
@@ -125,9 +125,9 @@ const App = () => {
         <Loader /> // Show loader while the app is initializing
       ) : (
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/mining" element={<ProtectedRoute element={<Home />}/>} />
           <Route path="/wallet" element={<ProtectedRoute element={<Wallet />} />} />
-          <Route path="/mining" element={<ProtectedRoute element={<Mining />} />} />
+          <Route path="/" element={<Mining />} />
           <Route path="/quest" element={<ProtectedRoute element={<Quest />} />} />
           <Route path="/friends" element={<ProtectedRoute element={<Friends />} />} />
           <Route path="/withdraw" element={<ProtectedRoute element={<WithdrawPage />} />} />

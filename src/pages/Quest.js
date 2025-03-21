@@ -2,6 +2,7 @@ import React ,{useState} from "react";
 import { ChevronRight, CheckCircle, Zap, Gift,Star, Gem as GemIcon } from "lucide-react";
 import Footer from '../components/Footer';
 import {useNavigate} from "react-router-dom";
+import { Toaster, toast } from 'react-hot-toast';
 const Quest = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("community");
@@ -22,10 +23,10 @@ const communityTasks = [
   return (
     <div 
       className="bg-[#0d0d0d] text-gray-200 min-h-screen p-2 font-sans flex flex-col items-center relative" >
-      
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full max-w-md flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-white">Register AiCoinX Account</h1>
-        <div className="relative" onClick={() => setIsModalOpen(true)}>
+        <div className="relative" onClick={() => toast.success("Signup and connect your AiCoinX Wallet to start redeeming rewards")}>
         <img src="../assets/AiCoinX4.svg" alt="Invite Friend" className="text-white w-6 h-6" />
           <span className="absolute top-0 right-0 bg-red-500 w-3 h-3 rounded-full"></span>
         </div>
