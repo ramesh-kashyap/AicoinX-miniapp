@@ -69,7 +69,7 @@ const SignupPage = () => {
         </div>
   
         <div className="mt-8">
-          <img src="../assets/klink31.svg" alt="Email Connect" className="w-40 h-40" />
+          <img src="../assets/img/ok3d.png" alt="Email Connect" className="w-40 h-40" />
         </div>
   
         <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-xl flex items-center px-4 py-3 mt-8 shadow-lg">
@@ -158,7 +158,7 @@ const SignupPage = () => {
            <img src="../assets/klink35.svg" alt="reward" className="w-10 h-10" />
            <div>
              <p className="text-white font-bold">Sign up Reward</p>
-             <p className="text-yellow-500 font-bold">500,000</p>
+             <p className="text-yellow-500 font-semibold" style={{width:50}}>500,000</p>
            </div>
          </div>
        </div>

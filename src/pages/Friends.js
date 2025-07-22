@@ -10,6 +10,7 @@ const Friends = () => {
   const token = localStorage.getItem('token');
    const inviteLink = `https://t.me/${botUsername}?start=${userId}`;
   const [fripoints, setFripoints] = useState(0);
+  const [fiends, setFriends] =useState(0);
   // Telegram share link
   const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(
     "🚀 Join this amazing bot and earn rewards!"
@@ -25,6 +26,7 @@ const Friends = () => {
          if(response.data){ 
           console.log(response.data);
           setFripoints(response.data.totalFriends||0);
+          setFriends(response.data.inviteBonus||0)
          }
       }
       catch(error){
@@ -54,9 +56,9 @@ const Friends = () => {
         <div className="bg-[#1C1A3A] p-2 rounded-xl flex items-center justify-between border border-gray-700"style={{backgroundColor:"rgb(81 78 124)",paddingTop:"1px", paddingBottom:"1px"}}>
           <div className="flex items-center gap-3">
             <img src="../assets/click20.svg" alt="Invite Friend" className="w-12 h-12" />
-            <div className="flex justify-between items-center w-full max-w-md" style={{gap:"13rem"}}>
+            <div className="flex justify-between items-center w-full max-w-md" >
               <p className="text-white font-bold">Friends Referred</p>
-              <p>0</p>
+              <p style={{marginLeft:180}}>{fiends}</p>
             </div>
           </div>
           {/* <ChevronRight className="text-gray-400 w-6 h-6" /> */}
@@ -67,7 +69,7 @@ const Friends = () => {
             <div className="flex justify-between items-center w-full max-w-md">
               <p className="text-white font-bold">Referred Points</p>
               {/* <img src="../assets/img/oksharp.png" alt="Invite Friend" className="text-white w-5 h-5"  style={{marginLeft:"12rem"}}/> */}
-              <p className=" font-bold" style={{marginLeft:"13rem"}}>{fripoints}</p>
+              <p className=" font-bold" style={{marginLeft:185}}>{fripoints}</p>
             </div>
           </div>
           {/* <ChevronRight className="text-gray-400 w-6 h-6" /> */}

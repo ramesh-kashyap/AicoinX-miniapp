@@ -9,9 +9,38 @@ const ActivityDashboard = () => {
   const [coinBalance, setcoinBalance] = useState("");
   const [connected, setConnected] = useState("");
   const [totalAllUser, settotalAllUser] =useState("");
+    const [fiends, setFriends] = useState(0);
+    const [inviteBonus, setInviteBonus] = useState(0);
+    const [dailyUser, setDailyuser] =useState(0);
   useEffect(() => {
     fatchpoints();
+    fatchfriends();
+    dailyusers();
   }, []);
+
+   const fatchfriends  = async () =>{
+    try{
+       const response = await Api.post('auth/fetchfriend');
+       if(response.data.totalFriends){ 
+        setFriends(response.data.totalFriends||0)
+       }
+    }
+    catch(error){   
+         console.error("Somthing Wrong try again!")
+    }
+   }
+
+   const dailyusers = async () =>{
+    try{
+         const response = await Api.post('auth/dailyusers');
+         if(response.data){
+            setDailyuser(response.data.daliyuses);
+         }
+    }
+    catch{
+      console.error("somthing wrong");
+    }
+   }
   
 
   const fatchpoints = async () =>{
@@ -22,6 +51,7 @@ const ActivityDashboard = () => {
         settotalBalance(response.data.totalallCoin);
         setcoinBalance(response.data.coin_balance);
         settotalAllUser(response.data.userCount);
+        setInviteBonus(response.data.inBonus);
         if(!response.data.telegram_id){
           setConnected("❌ AiCoinX account is not connected")
         }
@@ -85,14 +115,14 @@ const ActivityDashboard = () => {
           <p className="text-gray-300 text-sm">Friends Referred</p>
           <h2 className="text-3xl font-bold flex items-center justify-center gap-2">
             <img src="../assets/click20.svg" alt="referrals" className="w-8 h-8" />
-            0
+            {fiends}
           </h2>
         </div>
         <div className="text-center">
           <p className="text-gray-300 text-sm">Points earned from sharing with friends</p>
           <h2 className="text-3xl font-bold flex items-center justify-center gap-2">
             <img src="../assets/img/ok3d.png" alt="points" className="w-8 h-8" />
-            0
+            {inviteBonus}
           </h2>
         </div>
       </div>
@@ -122,8 +152,8 @@ const ActivityDashboard = () => {
         <div className="text-center">
           <p className="text-gray-300 text-sm">Daily AiCoinXers</p>
           <h2 className="text-3xl font-bold flex items-center justify-center gap-2">
-            <img src="../assets/img/ok3d.png" alt="points" className="w-8 h-8" />
-            0
+            <img src="../assets/click23.svg" alt="points" className="w-8 h-8" />
+            {dailyUser}
           </h2>
         </div>
       </div>

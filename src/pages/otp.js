@@ -94,7 +94,7 @@ const Otp = () => {
     
 
       <button
-        className="w-full max-w-md bg-green-600 text-white text-lg font-bold py-4 rounded-lg mt-8 shadow-xl"
+        className="w-full max-w-md bg-purple-600 text-white text-lg font-bold py-4 rounded-lg mt-8 shadow-xl"
         onClick={handleVerifyOtp}
       >
         Verify OTP

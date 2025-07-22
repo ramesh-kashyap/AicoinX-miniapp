@@ -111,8 +111,9 @@ const App = () => {
 
   // Protected route component to ensure users are authenticated
   const ProtectedRoute = ({ element }) => {
+    console.log(loading);
     if (loading) {
-      return <Loader />; // Show loader while loading
+      return <Loader />; 
     }
     return token ? element : <Navigate to="/mining" />;
   };

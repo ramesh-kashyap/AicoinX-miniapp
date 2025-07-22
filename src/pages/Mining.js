@@ -53,7 +53,7 @@ const Mining = () => {
         setBalance(response.data.balance);
       }      
     } catch (err) {
-      toast.error("Error updating balance:", err,{ duration: 1000 });
+      console.error("Error updating balance:", err,{ duration: 1000 });
     }
   };
 
@@ -66,7 +66,7 @@ const Mining = () => {
       }
     }
     catch (err) {
-      toast.error("Error updating balance:", err,{ duration: 1000 });
+     console.error("Error updating balance:", err,{ duration: 1000 });
     }
    }
 
@@ -137,11 +137,11 @@ useEffect(() => {
         <Toaster position="top-right" reverseOrder={false} />
       <div className="w-full flex justify-between items-center text-white text-sm">
         <div className="flex gap-2 items-center bg-gray-800/50 px-4 py-3 rounded-lg">
-          <img src="../assets/klink5.svg" alt="coin" className="w-5 h-5" />
+          <img src="../assets/img/oksharp.png" alt="coin" className="w-5 h-5" />
           <span>{balance}</span>
         </div>        
         <div className="flex gap-2 items-center bg-gray-800/50 px-4 py-3 rounded-lg" onClick={() => navigate("/tapairdrop")}>
-        <img src="../assets/img/oksharp.png" alt="coin" className="w-5 h-5" onClick={() => navigate("/tapairdrop")}/>
+        {/* <img src="../assets/img/oksharp.png" alt="coin" className="w-5 h-5" onClick={() => navigate("/tapairdrop")}/> */}
           <span className="text-yellow-300">Bronze</span>
         </div>
         <div className="flex gap-2 items-center bg-gray-800/50 px-4 py-3 rounded-lg">

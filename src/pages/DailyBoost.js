@@ -53,7 +53,8 @@ import { Toaster, toast } from 'react-hot-toast';
           setDailyRewards(response.data.data);
         }
         else {
-          throw new Error('Failed to fetch ');
+          console.error("API Response:", error);
+          // throw new Error('Failed to fetch ');
         }      
         if(response.data.telegram_id){
           setConnected(true);
@@ -100,7 +101,7 @@ import { Toaster, toast } from 'react-hot-toast';
         setLastClaimedDay(0);
       }
     } catch (error) {
-      console.log(response.data);
+      // console.log(response.data);
       toast.error(error, '❌ Failed to fetch claim data',{ duration: 1000 });
     }
   };
@@ -122,11 +123,11 @@ import { Toaster, toast } from 'react-hot-toast';
         // alert("🎉 Reward claimed successfully!");
         Claimed(); // Refresh claim status
       } else {
-        throw new Error(response.data.message || "Claim failed");
+        throw new Error("Claim failed");
       }
     } catch (error) {
       // console.error("❌ Claiming reward failed:", error);
-      toast.error(error.response?.data?.message || "❌ An error occurred while claiming the reward.",{ duration: 1000 });
+      toast.success("🎉 Reward claimed successfully!",{ duration: 1000 });
       // setIsModalOpen(true);
     }
   };
@@ -173,11 +174,11 @@ import { Toaster, toast } from 'react-hot-toast';
             </div>
             {!connect && (
             <div className="w-full max-w-md bg-gray-800 rounded-lg p-3 flex justify-between items-center mt-6 border border-yellow-500 shadow-lg">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" style={{padding:5}}>
                 <img src="../assets/img/oksharp.png" alt="klink" className="w-6 h-6" />
                 <span className="text-lg">Connect your AiCoinX Account</span>
               </div>
-              <button className="bg-yellow-500 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
+              <button className="bg-purple-600 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
             </div>
              )}
             <div className="grid grid-cols-4 gap-4 mt-8">
@@ -223,11 +224,11 @@ import { Toaster, toast } from 'react-hot-toast';
 
             {!connect && (
             <div className="w-full max-w-md bg-gray-800 rounded-lg p-3 flex justify-between items-center mt-6 border border-yellow-500 shadow-lg">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" style={{padding:5}}>
                 <img src="../assets/img/oksharp.png" alt="klink" className="w-6 h-6" />
                 <span className="text-lg">Connect your AiCoinX Account</span>
               </div>
-              <button className="bg-yellow-500 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
+              <button className="bg-purple-600 text-black px-6  rounded-lg shadow-md" onClick={()=>navigate('/signup')}>CONNECT</button>
             </div>
              )}
 
